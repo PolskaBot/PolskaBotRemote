@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Remote
 {
-    public partial class Form1 : Form
+    static class Program
     {
-        public Form1()
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        static void Main()
         {
-            InitializeComponent();
             new Server();
+            Console.Read();
         }
     }
 }

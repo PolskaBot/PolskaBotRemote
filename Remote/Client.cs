@@ -35,8 +35,16 @@ namespace Remote
             if(id == 101)
             {
                 byte[] code = reader.ReadBytes(length - 2);
-                // TODO: Initialize Stage One
-                // TODO: Return SWF
+
+                // Generate code
+                Generator generator = new Generator();
+                generator.Build(code);
+
+                // Return response
+                writer.Write((short)(generator.Output.Length + 2));
+                writer.Write((short)102);
+                writer.Write(generator.Output);
+                writer.Flush();
             }
         }
     }
