@@ -15,6 +15,7 @@ namespace Remote
         public Form1()
         {
             InitializeComponent();
+            new Server();
         }
     }
 }
