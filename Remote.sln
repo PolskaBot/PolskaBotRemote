@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remote", "Remote\Remote.csproj", "{75D7D197-9260-4D58-88A0-9753B580A5ED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{75D7D197-9260-4D58-88A0-9753B580A5ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75D7D197-9260-4D58-88A0-9753B580A5ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75D7D197-9260-4D58-88A0-9753B580A5ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75D7D197-9260-4D58-88A0-9753B580A5ED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
