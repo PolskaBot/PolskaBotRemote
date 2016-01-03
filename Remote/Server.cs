@@ -17,7 +17,7 @@ namespace Remote
 
         public Server()
         {
-            server = new TcpListener(IPAddress.Parse("127.0.0.1"), 8082);
+            server = new TcpListener(IPAddress.Parse(Environment.GetEnvironmentVariable("PB_SERVER_IP")), 8082);
             server.Start();
             loop = new Task(() => Listen());
             loop.Start();
