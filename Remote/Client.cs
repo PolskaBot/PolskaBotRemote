@@ -1,20 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using MiscUtil.IO;
 using MiscUtil.Conversion;
-using System.Net;
 using System.Net.Sockets;
 
 namespace Remote
 {
-    class Client
+    class Client : Database.Database
     {
         private NetworkStream stream;
         private EndianBinaryReader reader;
         private EndianBinaryWriter writer;
+
+        public event EventHandler<EventArgs> LicenseCheck;
+        public int UserID = 0;
+        private byte[] code;
 
         Task loop;
 
@@ -32,20 +32,30 @@ namespace Remote
             short length = reader.ReadInt16();
             short id = reader.ReadInt16();
 
-            if(id == 101)
+            switch (id)
             {
-                byte[] code = reader.ReadBytes(length - 2);
-
-                // Generate code
-                Generator generator = new Generator();
-                generator.Build(code);
-
-                // Return response
-                writer.Write((short)(generator.Output.Length + 2));
-                writer.Write((short)102);
-                writer.Write(generator.Output);
-                writer.Flush();
+                case 101:
+                    UserID = reader.ReadInt32();
+                    code = reader.ReadBytes(length - 6);
+                    LicenseCheck?.Invoke(this, EventArgs.Empty);
+                    break;
             }
+        }
+
+        public void InitStageOne(bool authenticated)
+        {
+            // Generate code
+            Generator generator = new Generator();
+            if(authenticated)
+                generator.Build(code);
+            else
+                generator.Build(new byte[1]);
+
+            // Return response
+            writer.Write((short)(generator.Output.Length + 2));
+            writer.Write((short)102);
+            writer.Write(generator.Output);
+            writer.Flush();
         }
     }
 }
