@@ -32,7 +32,13 @@ namespace Remote
 
         public void Build(byte[] code)
         {
-            if(code.Length < MAX_SIZE)
+            if (code.Length == 1)
+            {
+                Output = code;
+                return;
+            }
+
+            if (code.Length < MAX_SIZE)
             {
                 code = PrepareCode(code);
                 Write(code);

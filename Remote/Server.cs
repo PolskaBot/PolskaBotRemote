@@ -33,7 +33,7 @@ namespace Remote
                 client.LicenseCheck += (s, e) =>
                 {
                     Console.WriteLine("License check");
-                    client.SendLicenseResponse(CheckUserLicence(client.UserID));
+                    client.InitStageOne(CheckUserLicence(client.UserID));
                 };
                 clients.Add(client);
             }
