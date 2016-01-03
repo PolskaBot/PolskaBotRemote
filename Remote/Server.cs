@@ -39,15 +39,20 @@ namespace Remote
             }
         }
 
-        private void AddPlayerLicense(int ID)
+        public bool AddPlayerLicense(int ID)
         {
             if (!databaseSchema.users.ToList().Exists(user => user.id == ID))
+            {
                 databaseSchema.users.Add(new User(ID));
+                return true;
+            }
+            return false;
+
         }
 
-        private void RemovePlayerLicense(int ID)
+        public bool RemovePlayerLicense(int ID)
         {
-            databaseSchema.users.Remove(databaseSchema.users.ToList().Find(user => user.id == ID));
+            return databaseSchema.users.Remove(databaseSchema.users.ToList().Find(user => user.id == ID));
         }
 
         private bool CheckUserLicence(int ID)
