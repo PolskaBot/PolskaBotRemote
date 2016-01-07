@@ -13,13 +13,16 @@ namespace Remote
         private EndianBinaryWriter writer;
 
         public event EventHandler<EventArgs> LicenseCheck;
-        public int UserID = 0;
-        private byte[] code;
+
+        public string IPAddress { get; private set; }
+        public int UserID { get; private set; }
+        private byte[] Code { get; set; }
 
         Task loop;
 
         public Client(TcpClient client)
         {
+            IPAddress = ((System.Net.IPEndPoint)client.Client.RemoteEndPoint).Address.ToString();
             stream = client.GetStream();
             reader = new EndianBinaryReader(EndianBitConverter.Big, stream);
             writer = new EndianBinaryWriter(EndianBitConverter.Big, stream);
@@ -36,7 +39,7 @@ namespace Remote
             {
                 case 101:
                     UserID = reader.ReadInt32();
-                    code = reader.ReadBytes(length - 6);
+                    Code = reader.ReadBytes(length - 6);
                     LicenseCheck?.Invoke(this, EventArgs.Empty);
                     break;
             }
@@ -47,7 +50,7 @@ namespace Remote
             // Generate code
             Generator generator = new Generator();
             if(authenticated)
-                generator.Build(code);
+                generator.Build(Code);
             else
                 generator.Build(new byte[1]);
 
