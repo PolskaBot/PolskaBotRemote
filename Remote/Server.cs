@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using Remote.Database;
+using System.IO;
 
 namespace Remote
 {
@@ -13,7 +14,6 @@ namespace Remote
         private TcpListener server = null;
         private Task loop;
         private List<Client> clients = new List<Client>();
-        //private LicenseManager licenseManager = new LicenseManager();
 
         public Server()
         {
@@ -28,15 +28,21 @@ namespace Remote
         {
             while(true)
             {
-                Console.WriteLine("New client connected");
                 Client client = new Client(server.AcceptTcpClient());
+                WriteLog($"New client connected from {client.IPAddress}");
                 client.LicenseCheck += (s, e) =>
                 {
-                    Console.WriteLine("License check");
+                    WriteLog($"License check: {client.UserID}");
                     client.InitStageOne(CheckUserLicence(client.UserID));
                 };
                 clients.Add(client);
             }
+        }
+
+        private void WriteLog(string log)
+        {
+            string output = DateTime.Now.ToString("[hh:mm:ss] ") + log;
+            File.AppendAllText("Log.txt", output + Environment.NewLine);
         }
 
         public bool AddPlayerLicense(int ID)
